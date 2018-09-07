@@ -18,6 +18,7 @@ const (
 	MysqlDriver    = "mysql"
 	PgxDriver      = "pgx"
 	PostgresDriver = "postgres"
+	Sqlite3Driver = "sqlite3"
 )
 
 var configKey string
@@ -166,6 +167,8 @@ func generateDsn(cfg *Config) (string, error) {
 		}
 
 		return fmt.Sprintf("dbname=%s host=%s port=%d user=%s password=%s sslmode=%s", cfg.DBName, cfg.Host, cfg.Port, cfg.User, cfg.Password, ssl), nil
+	case Sqlite3Driver:
+		return cfg.Host, nil
 	default:
 		return "", fmt.Errorf("driver %s not supported", cfg.Driver)
 	}
